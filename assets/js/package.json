@@ -1,0 +1,17 @@
+{
+  "name": "openpanel",
+  "version": "1.0.0",
+  "description": "Open Panel submissionm and display.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dougbela/hugo-theme-openspace.git"
+  },
+  "keywords": "hugo",
+  "author": "Douglas Beal",
+  "license": "CC-BY-3.0",
+  "devDependencies": {
+    "bootstrap-scss": "^4.2.1",
+    "jquery": "^3.3.1",
+    "jquery-sortable": "^0.9.13"
+  }
+}

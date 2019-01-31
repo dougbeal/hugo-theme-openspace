@@ -7,12 +7,12 @@ tags = ["bootstrap", "blog", "font awesome"]
 features = ["responsive", "blog"]
 min_version = 0.25
 
-[author]
+[original]
   name = "Alan Orth"
   homepage = "https://englishbulgaria.net"
 
-[original]
-  author = "mdo"
-  homepage = "https://v4-alpha.getbootstrap.com/examples/blog/"
+[author]
+  author = "dougbeal"
+  homepage = "https://dougbeal.com"
 
 # vim: ts=2 sw=2 et

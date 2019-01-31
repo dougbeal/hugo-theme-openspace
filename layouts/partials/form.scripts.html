@@ -1,0 +1,7 @@
+{{/* -*- engine:go -*- */}}
+{{ $jquery := resources.Get "js/node_modules/jquery/dist/jquery.js" }}
+{{ $jquery_sortable := resources.Get "js/node_modules/jquery-sortable/source/js/jquery-sortable.js" }}
+{{ $js := slice $jquery $jquery_sortable | resources.Concat "js/bundle.js" | fingerprint }}
+<script type="text/javascript" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+
+

@@ -1,0 +1,110 @@
+
+
+{{ define "javascript" }}
+    {{/* -*- engine:go -*- */}}    
+    {{ partial `form.scripts.html` }}
+
+{{ end }}
+{{ define "main" }}
+panel form single
+<style>
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.panelTimes li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.panelTimes li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
+</style>
+<script>
+ $(function  () {
+     $("ol.panelTimes").sortable({
+         group: 'panelTimes',
+         // set $item relative to cursor position
+         onDragStart: function ($item, container, _super) {
+             var offset = $item.offset(),
+                 pointer = container.rootGroup.pointer;
+
+             adjustment = {
+                 left: pointer.left - offset.left,
+                 top: pointer.top - offset.top
+             };
+
+             _super($item, container);
+         },
+     });
+ });
+</script>
+
+
+{{ $.Scratch.Add "labelClasses" "f6 b db mb1 mt3 sans-serif mid-gray" }}
+{{ $.Scratch.Add "inputClasses" "w-100 f5 pv3 ph3 bg-light-gray bn" }}
+<form class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST" role="form">
+
+    <label class="{{ $.Scratch.Get "labelClasses" }}"  for="name">Your Name</label>
+    <input type="text" id="name" name="name" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="name"/>
+
+    <label class="{{ $.Scratch.Get "labelClasses" }}" for="anonymizeName">Anonymize Name on Web</label>
+    <input type="checkbox" name="anon" value="anonymizeName">
+
+
+    <fieldset>
+        <legend class="{{ $.Scratch.Get "labelClasses" }}" for="panelType">Panel Type</legend>
+        <label class="{{ $.Scratch.Get "labelClasses" }}"  for="panelType.presentation">Presentation/Demo</label>
+        <input type="radio" name="panelType" value="panelType.panel">
+        <label class="{{ $.Scratch.Get "labelClasses" }}"  for="panelType.pannelDiscussion">Panel Dicussion</label>
+        <input type="radio" name="panelType" value="panelType.open" checked>
+        <label class="{{ $.Scratch.Get "labelClasses" }}"  for="panelType.openDiscussion">Open Discussion</label>
+        <input type="radio" name="panelType" value="panelType.presentation">
+    </fieldset>    
+
+    <fieldset style="display: grid;">
+        <ol class="panelTimes vertical list-group" name="goodTimes" style="grid-column: 1 / 2; min-height: 10px;">
+            <label class="list-group-item disabled" style="">👍⏰</label>
+            <li class="list-group-item">Saturday - Columia B/2 - 2pm</li>
+            <li class="list-group-item">Saturday - Columia B/2 - 3pm</li>
+            <li class="list-group-item">Saturday - Columia A/1 - 4pm</li>
+            <li class="list-group-item">Saturday - Columia A/1 - 5pm</li>
+            <li class="list-group-item">Saturday - Columia B/2 - 5pm</li>
+            <li class="list-group-item">Saturday - Columia B/2 - 8pm</li>
+            <li class="list-group-item">Saturday - Columia A/1 - 9pm</li>
+            <li class="list-group-item">Saturday - Columia B/2 - 9pm</li>
+            <li class="list-group-item">Sunday - Columbia A/1 - 10am</li>
+            <li class="list-group-item">Sunday - Columbia B/2 - 10am</li>
+            <li class="list-group-item">Sunday - Columbia A/1 - 11am</li>
+            <li class="list-group-item">Sunday - Columbia B/2 - 11am</li>
+
+        </ol>
+        <ol class="panelTimes vertical list-group" name="badTimes" style="grid-column: 2 / 2; min-height: 10px;">
+            <label class="list-group-item disabled">👎⏰</label>
+        </ol>
+    </fieldset>
+    <label class="{{ $.Scratch.Get "labelClasses" }}"  for="mc">Organzer/Facilitator/Panelists</label>
+    <input type="text" id="mc" name="mc" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="mc"/>
+
+    <label class="{{ $.Scratch.Get "labelClasses" }}" for="title">Session Title</label>
+    <input type="text" id="title" name="title" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Fountain Pens"  aria-labelledby="title"/>
+
+    <label class="{{ $.Scratch.Get "labelClasses" }}" for="tagline">Tag Line</label>    
+    <input type="text" id="tagline" name="tagline" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Tools from a more civilized age. Pens and Paper"  aria-labelledby="taglinetitle"/>
+
+    <label class="{{ $.Scratch.Get "labelClasses" }}" for="description">Description</label>    
+    <textarea id="description" name="description" maxlength="5000" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Show off your pens! Learn about pens! Discuss the best paper for pens! Dicuss and discover inks."  aria-labelledby="description"></textarea>
+
+    <input class="db w-100 mv2 white pa3 bn hover-shadow hover-bg-blck bg-animate bg-black" type="submit" value="Send" />
+
+</form>
+
+{{ end }}
+
