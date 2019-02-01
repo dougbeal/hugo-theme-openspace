@@ -22,26 +22,39 @@ $( document ).ready( function() {
             var data = $("ol.panelTimes");
             console.debug("data:", data);
             console.debug("len:", data.length);
-            var filtered = $.map( data, function (ol) {
-                console.debug(ol.id);
-                var lis = $(ol).find('li');
-                if (lis.length === 0) {
-                    return [];
-                } else {
-                    console.debug(lis.length);
-                    return $.map( lis, function (li) {
-                        console.debug(li.id);
-                        return {
-                            "id": li.id,
-                            "data-id": li['data-id']
+            var lis = $('#goodTimes').find('li');
+            var arr = [];
+            if (lis.length === 0) {
+                arr = [];
+            } else {
+                console.debug(lis.length);
+                arr = $.map( lis, function (li) {
+                    console.debug(li.id);
+                    return {
+                        "id": li.id,
+                        "data-id": li['data-id']
                         };
                     });
-                }
-            });
-            console.debug(filtered);
-            var jsonString = JSON.stringify(filtered, null, '');
-            console.debug(jsonString);
-            $('#hidden-times-input').val(jsonString);
+            }
+            var jsonString = JSON.stringify(arr, null, '');            
+            $('#hidden-good-times-input').val( jsonString);
+
+            lis = $('#badTimes').find('li');
+            arr = [];
+            if (lis.length === 0) {
+                arr = [];
+            } else {
+                console.debug(lis.length);
+                arr = $.map( lis, function (li) {
+                    console.debug(li.id);
+                    return {
+                        "id": li.id,
+                        "data-id": li['data-id']
+                        };
+                    });
+            }
+            jsonString = JSON.stringify(arr, null, '');            
+            $('#hidden-bad-times-input').val( jsonString);            
         } catch (e) {
             console.error(e);
             // prevent form submission on error
