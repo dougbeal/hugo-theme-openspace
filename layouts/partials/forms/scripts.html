@@ -1,0 +1,9 @@
+{{/* -*- engine:go -*- */}}
+{{ $formjs := slice ( resources.Get "js/node_modules/jquery/dist/jquery.js" ) }}
+{{ $formjs = $formjs | append ( resources.Get "js/node_modules/jquery-sortable/source/js/jquery-sortable.js" )  }}
+{{ $formjs = $formjs | append ( resources.Get "js/node_modules/garlicjs/garlic.js" )}}
+{{ $formjs = $formjs | append ( resources.Get "js/form.js" )  }}
+{{ $js := $formjs | resources.Concat "js/bundle.js" | fingerprint }}
+<script type="text/javascript" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+
+
