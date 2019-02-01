@@ -5,7 +5,6 @@
 {{ end }}
 
 {{ define "main" }}
-panel form single
     <style>
      body.dragging, body.dragging * {
          cursor: move !important;
@@ -29,19 +28,21 @@ panel form single
 
 
 
-{{ $.Scratch.Add "labelClasses" "f6 b db mb1 mt3 sans-serif mid-gray" }}
-{{ $.Scratch.Add "inputClasses" "w-100 f5 pv3 ph3 bg-light-gray bn" }}
-<form id="panelForm" class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST"  data-persist="garlic" role="form">
+    {{ $.Scratch.Add "labelClasses"  ""}}
+    {{ $.Scratch.Add "inputClasses"  ""}}
+    <form id="panelForm" class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST"  data-persist="garlic" role="form">
+
+    <div class="form-inline">
+        <label class="col-2 {{ $.Scratch.Get "labelClasses" }}"  for="name">Your Name</label>
+        <input type="text" id="name" name="name" class="col-8 {{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="name"/>
 
 
-    <label class="{{ $.Scratch.Get "labelClasses" }}"  for="name">Your Name</label>
-    <input type="text" id="name" name="name" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="name"/>
-
-    <label class="{{ $.Scratch.Get "labelClasses" }}" for="anonymizeName">Anonymize Name on Web</label>
-    <input type="checkbox" name="anon" value="anonymizeName">
+        <label class="{{ $.Scratch.Get "labelClasses" }}" for="anonymizeName">Anonymize Name on Web</label>
+        <input type="checkbox" name="anon" value="anonymizeName">
+    </div>
 
 
-    <fieldset>
+    <fieldset class="form-inline">
         <legend class="{{ $.Scratch.Get "labelClasses" }}" for="panelType">Panel Type</legend>
         <label class="{{ $.Scratch.Get "labelClasses" }}"  for="panelType.presentation">Presentation/Demo</label>
         <input type="radio" name="panelType" value="panelType.panel">
@@ -52,50 +53,55 @@ panel form single
     </fieldset>    
 
     <fieldset style="display: grid;">
-        <input type="hidden" id="times" name="times" value="{}"/>
-        <ol class="panelTimes vertical list-group" name="goodTimes" style="grid-column: 1 / 2; min-height: 10px;">
+        <input type="hidden" id="hidden-times-input" name="hidden-times-input" value=""/>
+        <ol class="panelTimes vertical list-group" id="goodTimes" name="goodTimes" style="grid-column: 1 / 2; min-height: 10px;">
             <label class="list-group-item disabled" style="">👍⏰</label>
-            {{ $scratch = newScratch }}
+            {{ $scratch := newScratch }}
             {{ .Scratch.Set "class" "list-group-item" }}
             {{ .Scratch.Set "day" "Saturday" }}
-            {{ .Scratch.Set "room" "Columbia B/2" }}
-            
-            {{ .Scratch.Set "time" "2pm" }}{{ partial `forms/li-time-slot.html` $scratch }}
-            {{ .Scratch.Set "time" "3pm" }}{{ partial `forms/li-time-slot.html` $scratch }}
 
             {{ .Scratch.Set "room" "Columbia A/1" }}            
-            {{ .Scratch.Set "time" "4pm" }}
-            {{ partial `forms/li-time-slot.html` $scratch }}g
+            {{ .Scratch.Set "time" "4pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "5pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "9pm" }}{{ partial `forms/li-time-slot.html` . }}                        
+            
+            {{ .Scratch.Set "room" "Columbia B/2" }}
+            {{ .Scratch.Set "time" "2pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "3pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "5pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "8pm" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "9pm" }}{{ partial `forms/li-time-slot.html` . }}
 
             {{ .Scratch.Set "day" "Sunday" }}
-            <li data-id="2" class="list-group-item">Saturday - Columia A/1 - 4pm</li>
-            <li data-id="3" class="list-group-item">Saturday - Columia A/1 - 5pm</li>
-            <li data-id="4" class="list-group-item">Saturday - Columia B/2 - 5pm</li>
-            <li data-id="5" class="list-group-item">Saturday - Columia B/2 - 8pm</li>
-            <li data-id="6" class="list-group-item">Saturday - Columia A/1 - 9pm</li>
-            <li data-id="7" class="list-group-item">Saturday - Columia B/2 - 9pm</li>
-            <li data-id="8" class="list-group-item">Sunday - Columbia A/1 - 10am</li>
-            <li data-id="9" class="list-group-item">Sunday - Columbia B/2 - 10am</li>
-            <li data-id="10" class="list-group-item">Sunday - Columbia A/1 - 11am</li>
-            <li data-id="11" class="list-group-item">Sunday - Columbia B/2 - 11am</li>
 
+            {{ .Scratch.Set "room" "Columbia A/1" }}            
+            {{ .Scratch.Set "time" "10am" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "11am" }}{{ partial `forms/li-time-slot.html` . }}
+            
+            {{ .Scratch.Set "room" "Columbia B/2" }}
+            {{ .Scratch.Set "time" "10am" }}{{ partial `forms/li-time-slot.html` . }}
+            {{ .Scratch.Set "time" "11am" }}{{ partial `forms/li-time-slot.html` . }}
         </ol>
-        <ol class="panelTimes vertical list-group" name="badTimes" style="grid-column: 2 / 2; min-height: 10px;">
+        <ol class="panelTimes vertical list-group" id="badTimes" name="badTimes" style="grid-column: 2 / 2; min-height: 10px;">
             <label class="list-group-item disabled">👎⏰</label>
         </ol>
     </fieldset>
-    <label class="{{ $.Scratch.Get "labelClasses" }}"  for="mc">Organzer/Facilitator/Panelists</label>
-    <input type="text" id="mc" name="mc" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="mc"/>
-
-    <label class="{{ $.Scratch.Get "labelClasses" }}" for="title">Session Title</label>
-    <input type="text" id="title" name="title" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Fountain Pens"  aria-labelledby="title"/>
-
-    <label class="{{ $.Scratch.Get "labelClasses" }}" for="tagline">Tag Line</label>    
-    <input type="text" id="tagline" name="tagline" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Tools from a more civilized age. Pens and Paper"  aria-labelledby="taglinetitle"/>
-
-    <label class="{{ $.Scratch.Get "labelClasses" }}" for="description">Description</label>    
-    <textarea id="description" name="description" maxlength="5000" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Show off your pens! Learn about pens! Discuss the best paper for pens! Dicuss and discover inks."  aria-labelledby="description"></textarea>
-
+    <div class="form-inline">
+        <label class="{{ $.Scratch.Get "labelClasses" }}"  for="mc">Organzer/Facilitator/Panelists</label>
+        <input type="text" id="mc" name="mc" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="mc"/>
+    </div>
+    <div class="form-inline">
+        <label class="{{ $.Scratch.Get "labelClasses" }}" for="title">Session Title</label>
+        <input type="text" id="title" name="title" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Fountain Pens"  aria-labelledby="title"/>
+    </div>
+    <div class="form-inline">
+        <label class="{{ $.Scratch.Get "labelClasses" }}" for="tagline">Tag Line</label>    
+        <input type="text" id="tagline" name="tagline" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Tools from a more civilized age. Pens and Paper"  aria-labelledby="taglinetitle"/>
+    </div>
+    <div class="form-inline">                
+        <label class="{{ $.Scratch.Get "labelClasses" }}" for="description">Description</label>    
+        <textarea id="description" name="description" maxlength="5000" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Show off your pens! Learn about pens! Discuss the best paper for pens! Dicuss and discover inks."  aria-labelledby="description"></textarea>
+    </div>
     <input class="db w-100 mv2 white pa3 bn hover-shadow hover-bg-blck bg-animate bg-black" type="submit" value="Send" />
 
 </form>

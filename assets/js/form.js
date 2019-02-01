@@ -19,25 +19,42 @@ $( document ).ready( function() {
     });
     $('#panelForm').submit( function serialize_sortable() {
         try {
-            var data = sortable_group.sortable("panelTimes").get();
-            console.debug(data);        
-            var jsonString = JSON.stringify(data, null, ' ');
-            //var serialized = $('#times').serializeArray(); //jsonString.serializeArray();
+            var data = $("ol.panelTimes");
+            console.debug("data:", data);
+            console.debug("len:", data.length);
+            var filtered = $.map( data, function (ol) {
+                console.debug(ol.id);
+                var lis = $(ol).find('li');
+                if (lis.length === 0) {
+                    return [];
+                } else {
+                    console.debug(lis.length);
+                    return $.map( lis, function (li) {
+                        console.debug(li.id);
+                        return {
+                            "id": li.id,
+                            "data-id": li['data-id']
+                        };
+                    });
+                }
+            });
+            console.debug(filtered);
+            var jsonString = JSON.stringify(filtered, null, '');
             console.debug(jsonString);
-            $('#timesj').val(jsonString);
+            $('#hidden-times-input').val(jsonString);
         } catch (e) {
             console.error(e);
-            // prevent form submission
+            // prevent form submission on error
             return false;
         }
     });
 
-    $( 'input.name' ).garlic( {
+    $( 'input#name' ).garlic( {
         onRetrieve: function ( elem, retrievedValue ) {
-            console.log( 'The retrieved value for ' + elem.name() + ' is : ' + retrievedValue );
+            console.log( 'The retrieved value for ' + elem.id + ' is : ' + retrievedValue );
         },
         onPersist: function ( elem, storedValue ) {
-            console.log( 'The persisted value for ' + elem.name() + ' is : ' + storedValue );
+            console.log( 'The persisted value for ' + elem.id + ' is : ' + storedValue );
         }       
     });
 });

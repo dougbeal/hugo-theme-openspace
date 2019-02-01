@@ -1,2 +1,7 @@
 {{/* -*- engine:go -*- */}}    
-<li data-id="0" class="{{.Get "class"}}">{{.Get "day"}} - {{.Get "time"}} - {{ .Get "room" }}</li>
+<li id="{{ $.Scratch.Get "day" | urlize }}_{{$.Scratch.Get "time" | urlize }}_{{$.Scratch.Get "room" | urlize }}"
+    data-id="{{ $.Scratch.Get "day" | urlize }}_{{$.Scratch.Get "time" | urlize }}_{{$.Scratch.Get "room" | urlize }}"
+    data-day="{{$.Scratch.Get "day"}}"
+    data-time="{{$.Scratch.Get "time"}}"
+    data-room="{{ $.Scratch.Get "room" }}"
+    class="{{$.Scratch.Get "class"}}">{{$.Scratch.Get "day"}} - {{$.Scratch.Get "time"}} - {{ $.Scratch.Get "room" }}</li>
