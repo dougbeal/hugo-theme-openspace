@@ -1,56 +1,38 @@
-
+{{/* -*- engine:go -*- */}}    
 
 {{ define "javascript" }}
-    {{/* -*- engine:go -*- */}}    
-    {{ partial `form.scripts.html` }}
-
+    {{ partial `forms/scripts.html` }}
 {{ end }}
+
 {{ define "main" }}
 panel form single
-<style>
-body.dragging, body.dragging * {
-  cursor: move !important;
-}
+    <style>
+     body.dragging, body.dragging * {
+         cursor: move !important;
+     }
 
-.dragged {
-  position: absolute;
-  opacity: 0.5;
-  z-index: 2000;
-}
+     .dragged {
+         position: absolute;
+         opacity: 0.5;
+         z-index: 2000;
+     }
 
-ol.panelTimes li.placeholder {
-  position: relative;
-  /** More li styles **/
-}
-ol.panelTimes li.placeholder:before {
-  position: absolute;
-  /** Define arrowhead **/
-}
-</style>
-<script>
- $(function  () {
-     $("ol.panelTimes").sortable({
-         group: 'panelTimes',
-         // set $item relative to cursor position
-         onDragStart: function ($item, container, _super) {
-             var offset = $item.offset(),
-                 pointer = container.rootGroup.pointer;
+     ol.panelTimes li.placeholder {
+         position: relative;
+         /** More li styles **/
+     }
+     ol.panelTimes li.placeholder:before {
+         position: absolute;
+         /** Define arrowhead **/
+     }
+    </style>
 
-             adjustment = {
-                 left: pointer.left - offset.left,
-                 top: pointer.top - offset.top
-             };
-
-             _super($item, container);
-         },
-     });
- });
-</script>
 
 
 {{ $.Scratch.Add "labelClasses" "f6 b db mb1 mt3 sans-serif mid-gray" }}
 {{ $.Scratch.Add "inputClasses" "w-100 f5 pv3 ph3 bg-light-gray bn" }}
-<form class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST" role="form">
+<form id="panelForm" class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST"  data-persist="garlic" role="form">
+
 
     <label class="{{ $.Scratch.Get "labelClasses" }}"  for="name">Your Name</label>
     <input type="text" id="name" name="name" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="name"/>
@@ -70,20 +52,32 @@ ol.panelTimes li.placeholder:before {
     </fieldset>    
 
     <fieldset style="display: grid;">
+        <input type="hidden" id="times" name="times" value="{}"/>
         <ol class="panelTimes vertical list-group" name="goodTimes" style="grid-column: 1 / 2; min-height: 10px;">
             <label class="list-group-item disabled" style="">👍⏰</label>
-            <li class="list-group-item">Saturday - Columia B/2 - 2pm</li>
-            <li class="list-group-item">Saturday - Columia B/2 - 3pm</li>
-            <li class="list-group-item">Saturday - Columia A/1 - 4pm</li>
-            <li class="list-group-item">Saturday - Columia A/1 - 5pm</li>
-            <li class="list-group-item">Saturday - Columia B/2 - 5pm</li>
-            <li class="list-group-item">Saturday - Columia B/2 - 8pm</li>
-            <li class="list-group-item">Saturday - Columia A/1 - 9pm</li>
-            <li class="list-group-item">Saturday - Columia B/2 - 9pm</li>
-            <li class="list-group-item">Sunday - Columbia A/1 - 10am</li>
-            <li class="list-group-item">Sunday - Columbia B/2 - 10am</li>
-            <li class="list-group-item">Sunday - Columbia A/1 - 11am</li>
-            <li class="list-group-item">Sunday - Columbia B/2 - 11am</li>
+            {{ $scratch = newScratch }}
+            {{ .Scratch.Set "class" "list-group-item" }}
+            {{ .Scratch.Set "day" "Saturday" }}
+            {{ .Scratch.Set "room" "Columbia B/2" }}
+            
+            {{ .Scratch.Set "time" "2pm" }}{{ partial `forms/li-time-slot.html` $scratch }}
+            {{ .Scratch.Set "time" "3pm" }}{{ partial `forms/li-time-slot.html` $scratch }}
+
+            {{ .Scratch.Set "room" "Columbia A/1" }}            
+            {{ .Scratch.Set "time" "4pm" }}
+            {{ partial `forms/li-time-slot.html` $scratch }}g
+
+            {{ .Scratch.Set "day" "Sunday" }}
+            <li data-id="2" class="list-group-item">Saturday - Columia A/1 - 4pm</li>
+            <li data-id="3" class="list-group-item">Saturday - Columia A/1 - 5pm</li>
+            <li data-id="4" class="list-group-item">Saturday - Columia B/2 - 5pm</li>
+            <li data-id="5" class="list-group-item">Saturday - Columia B/2 - 8pm</li>
+            <li data-id="6" class="list-group-item">Saturday - Columia A/1 - 9pm</li>
+            <li data-id="7" class="list-group-item">Saturday - Columia B/2 - 9pm</li>
+            <li data-id="8" class="list-group-item">Sunday - Columbia A/1 - 10am</li>
+            <li data-id="9" class="list-group-item">Sunday - Columbia B/2 - 10am</li>
+            <li data-id="10" class="list-group-item">Sunday - Columbia A/1 - 11am</li>
+            <li data-id="11" class="list-group-item">Sunday - Columbia B/2 - 11am</li>
 
         </ol>
         <ol class="panelTimes vertical list-group" name="badTimes" style="grid-column: 2 / 2; min-height: 10px;">
