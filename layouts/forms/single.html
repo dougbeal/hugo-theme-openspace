@@ -41,6 +41,10 @@
         <input type="checkbox" name="anon" value="anonymizeName">
     </div>
 
+    <div class="form-inline">
+        <label class="{{ $.Scratch.Get "labelClasses" }}" for="title">Session Title (will be filename)</label>
+        <input type="text" id="title" name="title" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Fountain Pens"  aria-labelledby="title"/>
+    </div>
 
     <fieldset class="form-inline">
         <legend class="{{ $.Scratch.Get "labelClasses" }}" for="panelType">Panel Type</legend>
@@ -91,10 +95,7 @@
         <label class="{{ $.Scratch.Get "labelClasses" }}"  for="mc">Organzer/Facilitator/Panelists</label>
         <input type="text" id="mc" name="mc" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Foolscap Jester"  aria-labelledby="mc"/>
     </div>
-    <div class="form-inline">
-        <label class="{{ $.Scratch.Get "labelClasses" }}" for="title">Session Title</label>
-        <input type="text" id="title" name="title" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Fountain Pens"  aria-labelledby="title"/>
-    </div>
+
     <div class="form-inline">
         <label class="{{ $.Scratch.Get "labelClasses" }}" for="tagline">Tag Line</label>    
         <input type="text" id="tagline" name="tagline" maxlength="200" class="{{ $.Scratch.Get "inputClasses" }}"  required placeholder="Tools from a more civilized age. Pens and Paper"  aria-labelledby="taglinetitle"/>
