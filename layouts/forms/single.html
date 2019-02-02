@@ -30,7 +30,7 @@
 
     {{ $.Scratch.Add "labelClasses"  ""}}
     {{ $.Scratch.Add "inputClasses"  ""}}
-    <form id="panelForm" class="black-80 sans-serif" accept-charset="UTF-8" action="/panel" method="POST"  data-persist="garlic" role="form">
+    <form id="panelForm" class="black-80 sans-serif" accept-charset="UTF-8" action="{{ getenv "HUGO_POST_TARGET" }}" method="POST"  data-persist="garlic" role="form">
 
     <div class="form-inline">
         <label class="col-2 {{ $.Scratch.Get "labelClasses" }}"  for="name">Your Name</label>

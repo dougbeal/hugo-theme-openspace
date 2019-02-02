@@ -1,3 +1,4 @@
+HUGO_POST_TARGET="http://localhost:1314" hugo server -D --bind 0.0.0.0 --verbose
 
 ## Based on [Hugo Bootstrap v4 Blog](https://github.com/alanorth/hugo-theme-bootstrap4-blog) by [Alan Orth](https://github.com/alanorth)
 ## License
