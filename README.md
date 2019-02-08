@@ -1,3 +1,4 @@
+HUGO_POST_TARGET="http://localhost:1314" hugo server -D --bind 0.0.0.0 --verbose
 
 This is the best tutorial how to create static "landing pages" on Hugo: https://discuss.gohugo.io/t/creating-static-content-that-uses-partials/265/19?u=royston
 
